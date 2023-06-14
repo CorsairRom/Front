@@ -1,0 +1,68 @@
+<p-button 
+    (click)="volver()"
+    label="Volver" 
+    icon="pi pi-arrow-left" 
+    styleClass="p-button-sm p-button-outlined mb-3">
+</p-button>
+<ng-container *ngIf="propiedad">
+    <div class="card" >
+        <app-detalle-propiedad [propiedad]="propiedad"/>
+        
+        <div class="grid">
+
+            <div class="col-12" >
+                <div class="flex">
+                    <p-button 
+                        icon="pi pi-pencil" 
+                        label="Editar"
+                        styleClass="p-button-warning mr-2" 
+                        (click)="actualizar(propiedad)">
+                    </p-button>
+                    <p-confirmPopup></p-confirmPopup>
+                    <p-button 
+                        icon="pi pi-trash" 
+                        label="Eliminar"
+                        styleClass="p-button-danger" 
+                        (click)="eliminar($event, propiedad)">
+                    </p-button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card ARRIENDO -->
+    <div class="card">
+        <div *ngIf="arriendos.length === 0; else Arriendo">
+            <p class="text-sm font-bold text-600 mb-1">Esta propiedad no tiene un arriendo en curso</p>
+            <!-- Botón VER DETALLE (arriendo) -->
+            <button pButton pRipple
+                icon="pi pi-plus"
+                class="p-button mr-2"
+                style="background-color:#F78E00; width: auto;"
+                label="Registrar arriendo"
+                (click)="registrarArriendo(propiedad)">
+            </button>
+        </div>
+
+        <ng-template #Arriendo>            
+            <p class="text-sm font-bold text-600 mb-1">Esta propiedad posee un arriendo en curso</p>
+            <div *ngFor="let arriendo of arriendos">
+                <!-- Botón VER DETALLE (arriendo) -->
+                <button pButton pRipple
+                        icon="pi pi-search"
+                        class="p-button mr-2"
+                        style="background-color:#006C86; width: 120px;"
+                        label="Ver"
+                        (click)="verDetalleArriendo(arriendo)">
+                </button>
+            </div>
+            
+        </ng-template>
+    </div>
+
+    <!-- Card SERVICIOS EXTRA -->
+    <div class="card">
+        <h4>Servicios Extra</h4>
+        <app-listado-servicios-extra [propiedadId]="propiedad.id"/>
+    </div>
+</ng-container>

@@ -1,0 +1,242 @@
+<form [formGroup]="form">
+    <div class="title">
+        <div>
+            <h4>{{propiedad ? 'Editar propiedad' : 'Registrar propiedad'}}</h4>
+        </div>
+        <div>
+            <h4>Código: {{codigoPropiedad}}</h4>
+        </div>
+    </div>
+
+    <div class="grid mb-3">
+
+        <div class="col flex flex-column gap-2">
+            <span class="p-float-label">
+                <p-dropdown
+                    formControlName="propietario_id"
+                    [options]="(propietarios$ | async)!"
+                    optionLabel="pri_nom_prop"
+                    optionValue="id"
+                    [style]="{ width: '100%' }"
+                    placeholder="Propietario"
+                    [filter]="true"
+                    [filterBy]="'pri_nom_prop,pri_ape_prop,rut_prop'"
+                    filterPlaceholder="Rut, nombre, apellido"
+                    inputId="float-label"
+                >
+                <ng-template pTemplate="selectedItem" let-propietario>
+                    <div>{{propietario.rut_prop}} ({{propietario.pri_nom_prop}} {{propietario.pri_ape_prop}})  </div>
+                </ng-template>
+                <ng-template pTemplate="item" let-propietario>
+                    <div>{{propietario.rut_prop}} ({{propietario.pri_nom_prop}} {{propietario.pri_ape_prop}})  </div>
+                </ng-template>
+            </p-dropdown>
+                <label for="float-label">Propietario *</label>
+            </span>
+        </div>
+        <div class="col flex flex-column gap-2"></div>
+    </div>
+
+
+    <div class="grid mb-3">
+        <div class="col-6">
+            <span class="p-float-label">
+                <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="134-14123-11230-1234"
+                    formControlName="rol_ppdd"
+                    [style]="{ width: '100%' }" 
+                />
+                <label>Rol</label>
+            </span>
+        </div>
+    </div>
+
+    <app-ubicacion-form 
+        [initialComunaId]="propiedad?.comuna?.id"
+        (selectedComunaIdEvent)="handleSelectedComuna($event)">
+    </app-ubicacion-form>
+
+
+    <div class="grid mb-3">
+        <div class="col-6">
+            <span class="p-float-label">
+                <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="Av. caupolican 254"
+                    formControlName="direccion_ppdd"
+                    [style]="{ width: '100%' }" 
+                />
+                <label>Dirección *</label>
+            </span>
+        </div>
+        <div class="col-3">
+            <span class="p-float-label">
+                <p-dropdown
+                    formControlName="tipopropiedad_id"
+                    [options]="(tipoPropiedades$ | async)!"
+                    optionLabel="nombre_tipoppdd"
+                    optionValue="id"
+                    [style]="{ width: '100%' }"
+                    placeholder="Tipo propiedad"
+                    inputId="float-label"
+                ></p-dropdown>
+                <label for="float-label">Tipo propiedad *</label>
+            </span>
+        </div>
+        <div class="col-3">
+            <span class="p-float-label">
+                <input
+                    pInputText
+                    formControlName="numero_ppdd"
+                    placeholder="103"
+                    [style]="{ width: '100%' }"
+                />
+                <label>N° de Propiedad</label>
+            </span>
+            <small>(Opcional)</small>
+        </div>
+        <!-- Código GAS -->
+        <div class="col-4">
+            <span class="p-float-label">
+                <input
+                    pInputText
+                    formControlName="gas"
+                    placeholder="01-GASSUR"
+                    [style]="{ width: '100%' }"
+                />
+                <label>Código Servicio Gas</label>
+            </span>
+            <small>(Opcional)</small>
+        </div>
+        <!-- Código AGUA -->
+        <div class="col-4">
+            <span class="p-float-label">
+                <input
+                    pInputText
+                    formControlName="agua"
+                    placeholder="02-ESSBIO"
+                    [style]="{ width: '100%' }"
+                />
+                <label>Código Servicio Agua</label>
+            </span>
+            <small>(Opcional)</small>
+        </div>
+        <!-- Código LUZ -->
+        <div class="col-4">
+            <span class="p-float-label">
+                <input
+                    pInputText
+                    formControlName="luz"
+                    placeholder="03-CGE"
+                    [style]="{ width: '100%' }"
+                />
+                <label>Código Servicio Luz</label>
+            </span>
+            <small>(Opcional)</small>
+        </div>
+        <!-- Valor Arriendo Base -->
+        <div class="col-6">
+            <span class="p-float-label">
+                <input
+                    pKeyFilter="int"
+                    pInputText
+                    formControlName="valor_arriendo_base"
+                    placeholder="300000"
+                    [style]="{ width: '100%' }"
+                />
+                <label>Valor arriendo base</label>
+            </span>
+        </div>
+        <!-- Valor Gasto Común -->
+        <div class="col-6">
+            <span class="p-float-label">
+                <input
+                    pKeyFilter="int"
+                    pInputText
+                    formControlName="valor_gasto_comun"
+                    placeholder="50000"
+                    [style]="{ width: '100%' }"
+                />
+                <label>Valor gasto común</label>
+            </span>
+        </div>
+        <!-- ¿Es valor_arriendo_base en UF? -->
+        <div class="col-6" id="checkbox">
+            <p-checkbox 
+                [binary]="true" 
+                formControlName="es_valor_uf"
+                class="mr-2"
+                >
+            </p-checkbox>
+            <label>¿Es el valor arriendo base en UF?</label>
+        </div>
+        <!-- ¿Incluye gasto común? -->
+        <div class="col-6" id="checkbox">
+            <p-checkbox 
+                [binary]="true" 
+                formControlName="incluye_gc"
+                class="mr-2"
+                >
+            </p-checkbox>
+            <label>¿Incluye gasto común en valor de arriendo?</label>
+        </div>
+    </div>  
+    
+
+    <div class="grid mb-3" *ngIf="form.get('tipopropiedad_id')?.value === TipoPropiedadEnum.DEPARTAMENTO" >
+        <div class="col-6"></div>
+        <div class="col-6" >
+            
+                <div class="field grid align-items-center">
+                    <label class="col-4">Incluye bodega:</label>
+                    <div class="col-2">
+                        <p-inputSwitch formControlName="incluir_bodega"></p-inputSwitch>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-float-label">
+                            <input pInputText pKeyFilter="int" placeholder="123" formControlName="nro_bodega" [style]="{width: '100%'}">
+                            <label > N° bodega</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="field grid align-items-center">
+                    <label class="col-4">Incluye estacionamiento:</label>
+                    <div class="col-2">
+                        <p-inputSwitch  formControlName="incluir_estacionamiento"></p-inputSwitch>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-float-label">
+                            <input pInputText pKeyFilter="int" placeholder="123" formControlName="nro_estacionamiento" [style]="{width: '100%'}">
+                            <label > N° estacionamiento</label>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="grid mb-5">
+        <div class="col-12">
+            <span class="p-float-label">
+                <input type="text" pInputText formControlName="observaciones" [style]="{ width: '100%' }"/>
+                <label >Observaciones</label>
+            </span>
+        </div>
+    </div>
+
+    <div class="flex">
+        <p-button
+            styleClass="mr-3"
+            [disabled]="form.invalid"
+            label="Guardar"
+            (click)="submit()"
+        ></p-button>
+        <p-button
+            label="Cancelar"
+            styleClass="p-button-danger"
+            (click)="cancel()"
+        ></p-button>
+    </div>
+</form>

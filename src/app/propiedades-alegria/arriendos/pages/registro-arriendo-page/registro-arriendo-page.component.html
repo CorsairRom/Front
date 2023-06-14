@@ -1,0 +1,9 @@
+<div class="card">
+    <h2>Registro arriendo</h2>
+    <app-formulario-arriendo
+        [arrendatario]="arrendatario"
+        [propiedad]="propiedad"
+        (submitEvent)="handleSubmitEvent($event)"
+        (cancelEvent)="handleCancelEvent()"
+    />
+</div>

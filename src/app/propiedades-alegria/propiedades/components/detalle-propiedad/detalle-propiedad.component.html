@@ -1,0 +1,78 @@
+<ng-container *ngIf="propiedad">
+    <div class="flex w-100 justify-content-between mb-3">
+        <div><h4>Detalle propiedad</h4></div>
+        <div><h4>Código {{propiedad.cod}}</h4></div>
+    </div>
+    <div class="grid" [style]="{width: '100%'}">
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Rol</div>
+            <div class="font-medium">{{propiedad.rol_ppdd ?? '---'}}</div>
+        </div>
+
+        <div class="col 3">
+            <div class="text-sm font-bold text-600 mb-1">Propietario</div>
+            <button pButton pRipple
+                icon="pi pi-user"
+                class="p-button-text mr-2"
+                style="color:#006C86; width: 200px;"
+                label="{{ propiedad.propietario.pri_nom_prop + ' ' + propiedad.propietario.pri_ape_prop}}"
+                [routerLink]="['/propietarios', propiedad.propietario.id,'detalle']">
+            </button>
+        </div>
+
+        <div class="col-6">
+            <div class="text-sm font-bold text-600 mb-1">Dirección</div>
+            <div class="font-medium">{{propiedad.direccion_ppdd}}, <strong>{{propiedad.comuna.nom_comuna}}</strong>
+                <span *ngIf="propiedad.numero_ppdd">
+                    {{propiedad.tipopropiedad.nombre_tipoppdd}}:
+                    {{ propiedad.numero_ppdd }}
+                </span>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Valor base de arriendo</div>
+            
+            <div *ngIf="!propiedad.es_valor_uf;else ValorUF" class="font-medium">${{propiedad.valor_arriendo_base | number}}</div>
+            <ng-template #ValorUF>
+                <div class="font-medium">UF {{propiedad.valor_arriendo_base | number}}</div>
+            </ng-template>
+        </div>
+
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Bodega</div>
+            <div class="font-medium">{{propiedad.nro_bodega ? 'N° ' + propiedad.nro_bodega : '- - -'}}</div>
+        </div>
+        <div class="col-6">
+            <div class="text-sm font-bold text-600 mb-1">Estacionamiento</div>
+            <div class="font-medium">{{propiedad.nro_estacionamiento ? 'N° ' + propiedad.nro_estacionamiento : '- - -'}}</div>
+        </div>
+
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Gas</div>
+            <div class="font-medium">{{propiedad.gas ?? '- - -'}}</div>
+        </div>
+
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Agua</div>
+            <div class="font-medium">{{propiedad.agua ?? '- - -'}}</div>
+        </div>
+
+        <div class="col-3">
+            <div class="text-sm font-bold text-600 mb-1">Luz</div>
+            <div class="font-medium">{{propiedad.agua ?? '- - -'}}</div>
+        </div>
+
+
+        <div class="col-3" *ngIf="propiedad.incluye_gc">
+            <div class="text-sm font-bold text-600 mb-1">Valor gasto común </div>
+            <div class="font-medium">${{propiedad.valor_gasto_comun | number}}</div>
+        </div>
+
+        <div class="col-12">
+            <div class="text-sm font-bold text-600 mb-1">Observaciones </div>
+            <div class="font-medium">{{propiedad.observaciones ?? '- - -'}}</div>
+        </div>
+
+    </div>
+</ng-container>

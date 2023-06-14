@@ -1,0 +1,9 @@
+<div class="card">
+    <h4>Actualizar arrendatario</h4>
+    <app-formulario-arrendatario
+        *ngIf="arrendatario$ | async as arrendatario"
+        [arrendatario]="arrendatario"
+        (submitEvent)="submit($event)"
+        (cancelEvent)="cancel()"
+    />
+</div>

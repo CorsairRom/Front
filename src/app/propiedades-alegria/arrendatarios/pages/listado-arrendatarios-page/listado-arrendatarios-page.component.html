@@ -1,0 +1,7 @@
+<div class="card">
+    <h4>Arrendatarios</h4>
+    <app-listado-arrendatario 
+        *ngIf="arrendatarios$ | async as arrendatarios"
+        [arrendatarios]="arrendatarios"
+    />
+</div>

@@ -1,0 +1,9 @@
+<div class="card" >
+    <h4>Propiedades</h4>
+    <app-listado-propiedades-codigo 
+        *ngIf="propiedades$ | async as propiedades"
+        [propiedadesCod]="propiedades"
+    />
+
+    
+</div>

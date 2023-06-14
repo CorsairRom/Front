@@ -1,0 +1,55 @@
+<div class="card">
+    <h4>Usuarios</h4>
+    <p-toolbar styleClass="mb-4">
+        <div class="p-toolbar-group-start">
+
+            <!-- Botón REGISTRAR -->
+            <button pButton pRipple
+                icon="pi pi-plus"
+                class="p-button mr-2"
+                style="background-color:#F78E00"
+                label="Nueva cuenta"
+                (click)="crearNuevaCuenta()">
+            </button>
+
+        </div>
+    </p-toolbar>
+    <p-table
+        *ngIf="usuarios$ | async as usuarios"
+        [value]="usuarios"
+        [tableStyle]="{ 'min-width': '50rem' }"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th class="font-bold">Cod</th>
+                <th class="font-bold">Username</th>
+                <th class="font-bold">Email</th>
+                <th class="font-bold">Permiso</th>
+                <th class="font-bold">Acciones</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-usuario>
+            <tr>
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.username }}</td>
+                <td>{{ usuario.email }}</td>
+                <td>{{ usuario.permName }}</td>
+                <td class="flex">
+                    <div>
+                        <p-confirmPopup></p-confirmPopup>
+                        <button
+                            [disabled]="usuarioActual?.id === usuario.id"
+                            pButton
+                            pRipple
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger"
+                            label="Eliminar"
+                            (click)="eliminarUsuario($event, usuario)"
+                        ></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+</div>

@@ -1,0 +1,157 @@
+<form [formGroup]="form">
+
+    <div class="grid mb-3">
+        <div class="col-12">
+            <ng-container *ngIf="!propiedad">
+                <app-selector-propiedades (selectedEvent)="handlePropiedadSelectedEvent($event)" />
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="grid mb-3" *ngIf="propiedadSeleccionada">
+        <div class="col-12">
+            <div class="card slide-in-right">
+                <app-detalle-propiedad 
+                    [propiedad]="propiedadSeleccionada"
+                />
+            </div>
+        </div>
+    </div>
+
+    <div class="grid mb-3">
+        <div class="col-6">
+            <span class="p-float-label">
+
+                <ng-container *ngIf="arrendatario; else ArrendatarioSelector">
+                    <input
+                        type="text"
+                        pInputText
+                        value="{{arrendatario.rut_arr}} ({{arrendatario.pri_nom_arr}} {{arrendatario.pri_ape_arr}})"
+                        [disabled]="true"
+                        [style]="{ width: '100%' }">
+                </ng-container>
+
+                <ng-template #ArrendatarioSelector>
+                        <p-dropdown
+                            formControlName="arrendatario_id"
+                            [options]="(arrendatarios$ | async)!"
+                            optionLabel="pri_nom_arr"
+                            optionValue="id"
+                            [style]="{ width: '100%' }"
+                            placeholder="Arrendatario"
+                            [filter]="true"
+                            [filterBy]="'pri_nom_arr,pri_ape_arr,rut_arr'"
+                            filterPlaceholder="Rut, nombre, apellido"
+                            inputId="float-label">
+                            <ng-template pTemplate="selectedItem" let-arrendatario>
+                                <div>{{arrendatario.rut_arr}} ({{arrendatario.pri_nom_arr}}
+                                    {{arrendatario.pri_ape_arr}}) </div>
+                            </ng-template>
+                            <ng-template pTemplate="item" let-arrendatario>
+                                <div>{{arrendatario.rut_arr}} ({{arrendatario.pri_nom_arr}}
+                                    {{arrendatario.pri_ape_arr}}) </div>
+                            </ng-template>
+                        </p-dropdown>
+                </ng-template>
+
+                <label>Arrendatario</label>
+            </span>
+        </div>
+
+
+        <div class="col-6">
+            <span class="p-float-label">
+
+                <input type="text" pInputText formControlName="dia_pago" pKeyFilter="int" [style]="{ width: '100%' }" placeholder="5"/>
+                <label >Día de pago</label>
+                <small>Día del mes a pagar. (1 - 30)</small>
+
+            </span>
+        </div>
+
+    </div>
+
+
+
+    <div class="grid mb-3">
+
+        <div class="col-6">
+            <span class="p-float-label">
+                <p-calendar dateFormat="dd/mm/yy" formControlName="fecha_inicio" [showIcon]="true" [style]="{ width: '100%' }" [readonlyInput]="true"></p-calendar>
+                <label>Fecha de inicio *</label>
+            </span>
+        </div>
+        <div class="col-6">
+            <span class="p-float-label">
+                <p-calendar dateFormat="dd/mm/yy" formControlName="fecha_termino" [showIcon]="true" [style]="{ width: '100%' }" [minDate]="fechaTerminoMinDate" [readonlyInput]="true"></p-calendar>
+                <label>Fecha de término *</label>
+            </span>
+        </div>
+    </div>
+
+    <div class="grid mb-3">
+
+        <div class="col flex flex-column gap-2">
+            <span class="p-float-label">
+                <p-dropdown formControlName="periodo_reajuste" [options]="periodos_reajuste"
+                    [style]="{ width: '100%' }">
+                    <ng-template let-periodo pTemplate="selectedItem">{{periodo}} meses.</ng-template>
+                    <ng-template let-periodo pTemplate="item">{{periodo}} meses.</ng-template>
+                </p-dropdown>
+                <label>Periodo de reajuste *</label>
+                <small>En meses</small>
+            </span>
+        </div>
+
+        <div class="col flex flex-column gap-2">
+            <span class="p-float-label">
+                <p-calendar dateFormat="dd/mm/yy" formControlName="fecha_reajuste" [showIcon]="true" [readonlyInput]="true"
+                    [style]="{ width: '100%' }"></p-calendar>
+                <label>Fecha del primer reajuste *</label>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="grid mb-3">
+
+        <div class="col-6">
+            <span class="p-float-label">
+                    <p-inputNumber placeholder="$ 199.123 *" formControlName="valor_arriendo" prefix="$ "
+                    [style]="{ width: '100%' }" inputId="integeronly">
+                </p-inputNumber>
+                <label>Valor arriendo</label>
+            </span>
+        </div>
+
+        
+    </div>
+
+
+    <div class="grid mb-3">
+        <div class="col-12">
+            <span class="p-float-label">
+                <input type="text" pInputText formControlName="observaciones" [style]="{ width: '100%' }"/>
+                <label >Observaciones</label>
+            </span>
+        </div>
+
+    </div>
+
+    <div class="grid mb-5">
+
+        <div class="col flex flex-column gap-2" *ngIf="arriendo">
+            <span class="p-float-label">
+                <p-calendar dateFormat="dd/mm/yy" formControlName="fecha_entrega" [showIcon]="true" [style]="{ width: '100%' }" [readonlyInput]="true"></p-calendar>
+                <label>Fecha de entrega</label>
+            </span>
+        </div>
+
+
+    </div>
+
+    <div class="flex">
+        <p-button styleClass="mr-3" [disabled]="form.invalid" label="Guardar" (click)="submit()"></p-button>
+        <p-button label="Cancelar" styleClass="p-button-danger" (click)="cancel()"></p-button>
+    </div>
+</form>

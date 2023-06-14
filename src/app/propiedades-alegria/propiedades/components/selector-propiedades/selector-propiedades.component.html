@@ -1,0 +1,23 @@
+<ng-container *ngIf="propiedades$ | async as propiedades">
+    <span class="p-float-label" >
+        <p-dropdown
+            [options]="propiedades"
+            optionLabel="direccion_ppdd"
+            placeholder="Seleccione propiedad"
+            [filter]="true"
+            [filterBy]="'cod'"
+            filterPlaceholder="Cod"
+            filterMatchMode="equals"
+            inputId="float-label"
+            (onChange)="selected($event.value)"
+        > 
+            <ng-template pTemplate="selectedItem" let-propiedad>
+                <div>{{propiedad.cod}} - {{propiedad.direccion_ppdd}}, {{propiedad.tipopropiedad.nombre_tipoppdd}} {{propiedad.numero_ppdd}}</div>
+            </ng-template>
+            <ng-template pTemplate="item" let-propiedad>
+                <div>{{propiedad.cod}} - {{propiedad.direccion_ppdd}}, {{propiedad.tipopropiedad.nombre_tipoppdd}} {{propiedad.numero_ppdd}}</div>
+            </ng-template>
+        </p-dropdown>
+        <label >Propiedad</label>
+    </span>
+</ng-container>

@@ -1,0 +1,9 @@
+<div class="card">
+    <h4>Actualizar trabajador</h4>
+    <app-trabajador-form 
+        *ngIf="trabajador$ | async as trabajador" 
+        [trabajador]="trabajador" 
+        (submitEvent)="submit($event)"
+        (cancelEvent)="cancelar()"
+    />
+</div>

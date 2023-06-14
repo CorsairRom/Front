@@ -1,0 +1,40 @@
+.caption-table {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.caption-filter {
+    display: flex;
+    align-items: right;
+    gap: 20px;
+}
+
+td {
+    width: auto;
+    padding: 50px;
+}
+
+td:first-child {
+    width: 5%;
+}
+
+td:nth-child(2) {
+    width: 5%;
+}
+
+td:nth-child(3) {
+    width: 30%;
+}
+
+td:nth-child(4) {
+    width: 50%;
+}
+
+td:nth-child(5) {
+    width: 10%;
+}
+
+td:last-child {
+    width: 10%;
+}
